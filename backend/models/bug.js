@@ -10,6 +10,16 @@ const bug = db.define('Bug', {
     severity: {
         type: Sequelize.STRING,
         allowNull: false,
+        validate: {
+            isIn: [['Low', 'Medium', 'High']],
+        },
+    },
+    status: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            isIn: [['In Progress', 'Resolved']],
+        },
     },
     description: {
         type: Sequelize.TEXT,
@@ -18,11 +28,6 @@ const bug = db.define('Bug', {
     commitLink: {
         type: Sequelize.STRING,
         allowNull: true,
-    },
-    status: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: 'Open',
     },
     tstId: {
         type: Sequelize.INTEGER,

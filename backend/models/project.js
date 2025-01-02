@@ -68,3 +68,4 @@ export async function deleteProjectById(id) {
         throw new Error('Error deleting project: ' + error.message);
     }
 }
+
