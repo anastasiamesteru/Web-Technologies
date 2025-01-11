@@ -1,7 +1,8 @@
 import { Sequelize } from 'sequelize';
 import db from '../configuration/database.js';
 
-const bug = db.define('Bug', {
+// Define the Bug model
+const Bug = db.define('Bug', {
     bugId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -47,11 +48,13 @@ const bug = db.define('Bug', {
     },
 });
 
-export default bug;
+// Export the model
+export default Bug;
 
+// Helper function to get a bug by ID
 export async function getBugById(id) {
     try {
-        const bugRecord = await bug.findByPk(id);
+        const bugRecord = await Bug.findByPk(id);
         if (!bugRecord) {
             throw new Error('Bug not found');
         }
@@ -61,7 +64,7 @@ export async function getBugById(id) {
     }
 }
 
-// to set the status of a bug
+// Function to set the status of a bug to 'Resolved'
 export async function setBugStatusToResolved(id) {
     try {
         const bug = await getBugById(id);
@@ -72,6 +75,7 @@ export async function setBugStatusToResolved(id) {
     }
 }
 
+// Function to set the status of a bug to 'In Progress'
 export async function setBugStatusToInProgress(id) {
     try {
         const bug = await getBugById(id);
@@ -82,7 +86,7 @@ export async function setBugStatusToInProgress(id) {
     }
 }
 
-// to set the severity of a bug
+// Function to set the severity of a bug to 'Low'
 export async function setBugSeverityToLow(id) {
     try {
         const bug = await getBugById(id);
@@ -93,6 +97,7 @@ export async function setBugSeverityToLow(id) {
     }
 }
 
+// Function to set the severity of a bug to 'Medium'
 export async function setBugSeverityToMedium(id) {
     try {
         const bug = await getBugById(id);
@@ -103,6 +108,7 @@ export async function setBugSeverityToMedium(id) {
     }
 }
 
+// Function to set the severity of a bug to 'High'
 export async function setBugSeverityToHigh(id) {
     try {
         const bug = await getBugById(id);
@@ -120,17 +126,6 @@ export async function createBug(bugData) {
         return bug;
     } catch (error) {
         throw new Error('Error creating bug: ' + error.message);
-    }
-}
-
-// Get a bug by Id
-export async function getBugById(id) {
-    try {
-        const bug = await Bug.findByPk(id);
-        if (!bug) throw new Error('Bug not found');
-        return bug;
-    } catch (error) {
-        throw new Error('Error fetching bug: ' + error.message);
     }
 }
 
