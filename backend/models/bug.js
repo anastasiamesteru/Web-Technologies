@@ -23,7 +23,7 @@ const Bug = db.define('Bug', {
         },
     },
     description: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
     },
     commitLink: {
