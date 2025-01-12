@@ -98,3 +98,4 @@ export async function assignProjectToTeam(teamId, projectId) {
         throw new Error('Error assigning project to team: ' + error.message);
     }
 }
+

@@ -2,7 +2,6 @@ import express from 'express';
 import {
     getBugById,
     createBug,
-    updateBugField,
     assignTesterToBug,
     assignTeamMemberToBug,
     getBugsByTester,

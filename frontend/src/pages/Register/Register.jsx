@@ -2,22 +2,39 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
-const Register = ({ onLogin }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
-  const navigate = useNavigate(); 
+function Register() {
+	const [email, setEmail] = useState('');
+	const [name, setName] = useState('');
+	const [password, setPassword] = useState('');
+	const [isTester, setIsTester] = useState(false);
+  const [isTeamMember, setIsTeamMember] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-   
-    onLogin();
-  };
+	const navigate = useNavigate();
 
-  const handleRegisterRedirect = () => {
-    navigate('/login'); 
-  };
+	const handleTmRegister = () => {
+    setIsTeamMember(isTeamMember);
+
+	};
+  const handleTstRegister = () => {
+    setIsTester(!isTester);
+	};
+
+	const handleRegister = (event) => {
+		event.preventDefault();
+		let routeLink = isTester === true ? 'tester' : 'teammember';
+		axios
+			.post(`${url}${routeLink}/register`, { email, password, name })
+			.then((res) => {
+				toast.success('Account created successfully!');
+				sleep(500).then(() => {
+					navigate('/login');
+				});
+			})
+			.catch((err) => {
+				toast.error(err.response.data);
+			});
+	};
+
 
   return (
     <div className="register-page">
@@ -62,8 +79,8 @@ const Register = ({ onLogin }) => {
             </button>
           </div>
           <div className='register-btns'>
-          <button type="submit">Register as tester</button>
-          <button type="submit">Register as team member</button>
+          <button type="submit" onSubmit={handleTstRegister} >Register as tester</button>
+          <button type="submit" onSubmit={handleTmRegister}>Register as team member</button>
           </div>
         </form>
       </div>

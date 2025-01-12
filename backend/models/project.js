@@ -30,12 +30,11 @@ const project = db.define('Project', {
     },
 });
 
-export default project;
 
 // Create a new project
 export async function createProject(projectData) {
     try {
-        const project = await Project.create(projectData);
+        const project = await project.create(projectData);
         return project;
     } catch (error) {
         throw new Error('Error creating project: ' + error.message);
@@ -47,7 +46,7 @@ export async function getProjectById(id) {
     try {
         const project = await Project.findByPk(id, {
             include: {
-                model: Team,
+                model: team,
                 attributes: ['teamId', 'name'], // Includef team details
             },
         });
@@ -69,3 +68,4 @@ export async function deleteProjectById(id) {
     }
 }
 
+export default project;

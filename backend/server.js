@@ -1,33 +1,36 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const sequelize = require('./configuration/database');  
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import { Sequelize } from 'sequelize';  
 
-// Import routes
-const bugRoutes = require('./routes/bugRoutes');
-const testerRoutes = require('./routes/testerRoutes');
-const teamMemberRoutes = require('./routes/teamMemberRoutes');
-const projectRoutes = require('./routes/projectRoute');
-const teamRoutes = require('./routes/teamRoute');
-
-// Initialize the app
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Sync database
+app.get('/', (req, res) => {
+  res.send('Hello!');
+});
+
+import bugRoute from './routes/bugRoute.js';
+import projectRoute from './routes/projectRoute.js';
+import teamRoute from './routes/teamRoute.js';
+import accountRoutes from './routes/accountsRoute.js';
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: './database.sqlite'
+});
+
 sequelize.sync({ force: false }).then(() => {
   console.log('Database synced');
 });
 
-// Use routes
-app.use('/models/bugs', bugRoutes);
-app.use('/models/testers', testerRoutes);
-app.use('/models/team-members', teamMemberRoutes);
-app.use('/models/projects', projectRoutes);
-app.use('/models/teams', teamRoutes);
+//  routes
+app.use('/models/bugs', bugRoute);
+app.use('/models/projects', projectRoute);
+app.use('/models/teams', teamRoute);
+app.use('/accounts', accountRoutes);
 
-// Start the server
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+app.listen(4000, () => {
+  console.log('Server running on port 4000');
 });
