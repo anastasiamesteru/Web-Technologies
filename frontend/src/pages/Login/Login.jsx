@@ -6,8 +6,7 @@ const Login = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
-  const navigate = useNavigate(); // Use navigate hook for navigation
+  const navigate = useNavigate(); // Use navigate hook for navigatio
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,9 +15,11 @@ const Login = ({ onLogin }) => {
     onLogin();
   };
 
-  const handleRegisterRedirect = () => {
-    navigate('/register'); // Redirect to the register page when clicked
-  };
+  useEffect(() => {
+    const handleRegisterRedirect = () => {
+      navigate('/register'); // Redirect to the register page when clicked
+    };
+  }, [navigate]);
 
   return (
     <div className="login-page">
