@@ -6,18 +6,22 @@ import Bugs from './pages/Bugs/Bugs';
 import Projects from './pages/Project/Project';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
+import Team from './pages/Team/Team';
 
 import "./App.css";
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(''); //rol pentru a sti ce pagina sa afiseze
 
-  const handleLogin = () => {
+  const handleLogin = (role) => {
     setIsAuthenticated(true);
+    setRole(role); // Set role on login
   };
 
-  const handleRegister = () => {
+  const handleRegister = (role) => {
     setIsAuthenticated(true);
+    setRole(role); // Set role on registration
   };
 
   return (
@@ -37,6 +41,7 @@ const App = () => {
                 <Route path="/home" element={<Home />} />
                 <Route path="/bugs" element={<Bugs />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/team" element={<Team />} />
                 <Route path="*" element={<Navigate to="/home" />} />
               </>
             )}

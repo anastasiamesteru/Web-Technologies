@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Project.css';
 
-// replace with actual API endpoint
 const API_URL = 'http://localhost:5000/api/projects';
 
 const Projects = () => {
@@ -10,50 +9,45 @@ const Projects = () => {
     name: '',
     description: '',
     repositoryURL: '',
-    teamId: 1, // replace with actual dynamic data
+    teamId: 1,
   });
+  const [error, setError] = useState(null);
 
-  // Fetch projects from the backend API
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         const data = await response.json();
         setProjects(data);
       } catch (error) {
         console.error('Error fetching projects:', error);
+        setError('Error fetching projects');
       }
     };
 
     fetchProjects();
   }, []);
 
-  // Handle form input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewProject({ ...newProject, [name]: value });
   };
 
-  // Add a new project
   const handleAddProject = async (e) => {
     e.preventDefault();
   
-    // Custom validation
-    if (!newProject.name.trim()) {
-      alert("Project name is required.");
+    if (!newProject.name.trim() || !newProject.description.trim() || newProject.teamId < 0) {
+      alert('Please fill in all required fields correctly.');
       return;
     }
   
-    if (!newProject.description.trim()) {
-      alert("Description is required.");
-      return;
-    }
-  
-    if (newProject.teamId < 0) {
-      alert("Team ID must be a positive number.");
-      return;
-    }
-  
+    const optimisticProjects = [...projects, { ...newProject, projectId: Date.now() }];
+
+    setProjects(optimisticProjects);
+
     try {
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -63,85 +57,104 @@ const Projects = () => {
         body: JSON.stringify(newProject),
       });
   
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
       const addedProject = await response.json();
       setProjects([...projects, addedProject]);
       setNewProject({
         name: '',
         description: '',
         repositoryURL: '',
-        teamId: 1, // Reset the teamId or set it dynamically
-      }); // Reset the form
+        teamId: 1, 
+      });
     } catch (error) {
       console.error('Error adding project:', error);
+      setProjects(projects);  // Rollback optimistic update
+      setError('Error adding project');
     }
   };
-  
 
-  // Handle status change of a project
-  const handleStatusChange = (id, status) => {
-    // Assuming you will implement status change logic in your backend
+  const handleStatusChange = async (id, status) => {
     const updatedProjects = projects.map((project) =>
       project.projectId === id ? { ...project, status: status } : project
     );
     setProjects(updatedProjects);
+
+    // Assume you have an API endpoint to update the status
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+    } catch (error) {
+      console.error('Error updating project status:', error);
+      setError('Error updating project status');
+      // Rollback optimistic update
+      setProjects(projects);
+    }
   };
 
   return (
-    
     <div className="projects">
       <h1>Projects Management</h1>
-      {/* Form to add new project */}
+      {error && <p className="error">{error}</p>}
       <div className="add-project">
         <h2>Add New Project</h2>
         <form onSubmit={handleAddProject}>
-  <div>
-    <label>Project Name: </label>
-    <input
-      type="text"
-      name="name"
-      value={newProject.name}
-      onChange={handleInputChange}
-    />
-  </div>
-  <div>
-    <label>Description:</label>
-    <textarea
-      name="description"
-      value={newProject.description}
-      onChange={handleInputChange}
-    />
-  </div>
-  <div>
-    <label>Repository URL: </label>
-    <input
-      type="text"
-      name="repositoryURL"
-      value={newProject.repositoryURL}
-      onChange={handleInputChange}
-    />
-  </div>
-  <div>
-    <label>Team ID: </label>
-    <input
-      type="number"
-      name="teamId"
-      value={newProject.teamId}
-      onChange={handleInputChange}
-      min="0"
-    />
-  </div>
-  <button type="submit">Add Project</button>
-</form>
-
+          <div>
+            <label>Project Name: </label>
+            <input
+              type="text"
+              name="name"
+              value={newProject.name}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Description:</label>
+            <textarea
+              name="description"
+              value={newProject.description}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Repository URL: </label>
+            <input
+              type="text"
+              name="repositoryURL"
+              value={newProject.repositoryURL}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label>Team ID: </label>
+            <input
+              type="number"
+              name="teamId"
+              value={newProject.teamId}
+              onChange={handleInputChange}
+              min="0"
+            />
+          </div>
+          <button type="submit">Add Project</button>
+        </form>
       </div>
-      {/* Displaying the projects list */}
       <div className="project-list">
         {projects.map((project) => (
           <div key={project.projectId} className="project-item">
             <h3>{project.name}</h3>
             <p>{project.description}</p>
             <p>Repository: {project.repositoryURL}</p>
-            {/* Add status handling logic if needed */}
             <p>Status: {project.status || 'Active'}</p>
             <button onClick={() => handleStatusChange(project.projectId, project.status === 'Active' ? 'Completed' : 'Active')}>
               {project.status === 'Active' ? 'Mark as Completed' : 'Activate Project'}
@@ -149,8 +162,6 @@ const Projects = () => {
           </div>
         ))}
       </div>
-
-    
     </div>
   );
 };

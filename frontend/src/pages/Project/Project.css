@@ -1,95 +1,135 @@
+/* CSS */
 body {
-    background: radial-gradient(circle, #e7e9f7, #c9d7fb);
-    font-family: 'Quicksand', sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    
-  }
-  
-  .projects {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    height: 100%;
-  }
-  
-  .add-project,
-  .project-list {
-    width: 350px;
-    height: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 70px;
-  }
-  
-  .add-project h2,
-  .project-list h3 {
-    text-align: center;
-    color: black;
-  }
-  
-  .add-project form div {
-    margin-bottom: 15px;
-  }
-  
-  .add-project label {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: black;
-  }
-  
-  .add-project input,
-  .add-project textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-family: 'Quicksand', sans-serif;
-  }
-  
-  .add-project input:focus,
-  .add-project textarea:focus {
-    border-color: #756ade;
-    outline: none;
-    box-shadow: 0 0 8px rgba(117, 106, 222, 0.5);
-  }
-  
-  .add-project button {
-    width: 100%;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-    border: none;
-    font-family: 'Quicksand', sans-serif;
-    background: #756ade;
-    color: #fff;
-    font-weight: bold;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .add-project button:hover {
-    background-color: #5b55d1;
-  }
-  
-  .add-project button:active {
-    background-color: #4035a3;
-  }
-  
-  h1 {
-    margin-top: -540px;
-    padding: 0;
-    position: absolute;
-    text-align: center;
-    color: black;
-    
+  background: radial-gradient(circle, #e7e9f7, #c9d7fb);
+  font-family: 'Quicksand', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+}
+
+.projects {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  height: 100%;
+}
+
+.add-project,
+.project-list {
+  width: 350px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 70px;
+}
+
+.add-project h2,
+.project-list h3 {
+  text-align: center;
+  color: black;
+}
+
+.add-project form div {
+  margin-bottom: 15px;
+}
+
+.add-project label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: black;
+}
+
+.add-project input,
+.add-project textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.add-project input:focus,
+.add-project textarea:focus {
+  border-color: #756ade;
+  outline: none;
+  box-shadow: 0 0 8px rgba(117, 106, 222, 0.5);
+}
+
+.add-project button {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Quicksand', sans-serif;
+  background: #756ade;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-project button:hover {
+  background-color: #5b55d1;
+}
+
+.add-project button:active {
+  background-color: #4035a3;
+}
+
+.project-list {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.project-item {
+  width: 100%;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  /* Add some space between project items */
+}
+
+.project-item h3,
+.project-item p {
+  margin: 5px 0;
+}
+
+.project-item button {
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Quicksand', sans-serif;
+  background: #756ade;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.project-item button:hover {
+  background-color: #5b55d1;
+}
+
+.project-item button:active {
+  background-color: #4035a3;
+}
+
+h1 {
+  margin-top: -540px;
+  padding: 0;
+  position: absolute;
+  text-align: center;
+  color: black;
 }

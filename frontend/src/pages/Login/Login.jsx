@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
+  const [role, setRole] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +13,7 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     // Implement your login validation logic here
     // If successful:
-    onLogin();
+    onLogin(role); // Pass the role to onLogin
   };
 
   const handleRegisterRedirect = () => {
