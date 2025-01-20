@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
@@ -6,7 +6,7 @@ const Login = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Use navigate hook for navigatio
+  const navigate = useNavigate(); // Use navigate hook for navigation
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +15,9 @@ const Login = ({ onLogin }) => {
     onLogin();
   };
 
-  useEffect(() => {
-    const handleRegisterRedirect = () => {
-      navigate('/register'); // Redirect to the register page when clicked
-    };
-  }, [navigate]);
+  const handleRegisterRedirect = () => {
+    navigate('/register'); // Redirect to the register page when clicked
+  };
 
   return (
     <div className="login-page">
@@ -54,7 +52,7 @@ const Login = ({ onLogin }) => {
             />
           </div>
           <div className="register-container">
-            <label>Don't have an account?</label>
+            <label>No account yet? Create one!</label>
             <button
               type="button"
               className="RegisterBtn"

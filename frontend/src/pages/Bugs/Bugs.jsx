@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import './Bugs.css';
 
-const exampleBugs = [
-    { id: 1, title: 'Bug 1', description: 'This is bug 1', status: 'Open' },
-    { id: 2, title: 'Bug 2', description: 'This is bug 2', status: 'Closed' },
-    { id: 3, title: 'Bug 3', description: 'This is bug 3', status: 'Open' },
-];
+// const exampleBugs = [
+//     { id: 1, title: 'Bug 1', description: 'This is bug 1', status: 'Open' },
+//     { id: 2, title: 'Bug 2', description: 'This is bug 2', status: 'Closed' },
+//     { id: 3, title: 'Bug 3', description: 'This is bug 3', status: 'Open' },
+// ];
 
 const Bugs = () => {
-    const [bugs, setBugs] = useState(exampleBugs);
+    const [bugs, setBugs] = useState([]);
     const [newBug, setNewBug] = useState({ title: '', description: '', status: 'Open' });
 
     const handleInputChange = (e) => {
@@ -15,7 +16,11 @@ const Bugs = () => {
         setNewBug({ ...newBug, [name]: value });
     };
 
-
+    const handleAddBug = (e) => {
+        e.preventDefault();
+        setBugs([...bugs, { id: bugs.length + 1, ...newBug }]);
+        setNewBug({ title: '', description: '', status: 'Open' });
+    };
 
     const handleStatusChange = (id, status) => {
         const updatedBugs = bugs.map((bug) =>
@@ -28,7 +33,6 @@ const Bugs = () => {
         <div className="bugs">
             <h1>Bugs Tracker</h1>
 
-           
             <div className="bug-list">
                 {bugs.map((bug) => (
                     <div key={bug.id} className="bug-item">
@@ -42,7 +46,6 @@ const Bugs = () => {
                 ))}
             </div>
 
-        
             <div className="add-bug">
                 <h2>Add New Bug</h2>
                 <form onSubmit={handleAddBug}>

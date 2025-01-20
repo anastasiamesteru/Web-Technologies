@@ -1,7 +1,12 @@
-import React from "react";
+// import React from "react";
+import './Home.css';
 
 const Home = () => {
-  return <h1></h1>;
+  return (
+    <div className="home">
+       <h1> Welcome to BugBash</h1>
+    </div>
+  )
 };
 
 export default Home;
